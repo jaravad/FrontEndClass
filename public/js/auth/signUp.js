@@ -4,10 +4,20 @@ form.addEventListener('submit', function handleFormSubmit(event) {
 
   const email = form['email'].value;
   const password = form['password'].value;
-  const name = form['empname'].value;
+  const userData = {
+    name: form['name'].value,
+    doc: form['doc'].value,
+    numdoc: form['numdoc'].value,
+    img: form['img'].value,
+    empname: form['empname'].value,
+    phone: form['numtel'].value,
+  };
+  console.log(userData);
 
   const auth = new Authentication();
-  auth.crearCuentaEmailPass(email, password, name);
+
+  auth.crearCuentaEmailPass(email, password, userData);
+
   form.reset(); //try
 });
 

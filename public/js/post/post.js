@@ -1,50 +1,35 @@
 class Post {
-  constructor () {
-      // TODO inicializar firestore y settings
-
+  constructor() {
+    this.db = firebase.firestore();
   }
 
-  crearPost (uid, emailUser, titulo, descripcion, imagenLink, videoLink) {
-    
+  createUser(uid, userData) {
+    return this.db
+      .collection('users')
+      .add({
+        uid: uid,
+        name: userData.name,
+        doc: userData.doc,
+        numdoc: userData.numdoc,
+        img: userData.img,
+        empname: userData.empname,
+        phone: userData.phone,
+      })
+      .then((refDoc) => {
+        console.log(`Id del usuario: ${refDoc.id}`);
+      })
+      .catch((error) => {
+        console.error('Error al guardar datos del usuario');
+      });
   }
 
-  consultarTodosPost () {
-    
-  }
+  consultarTodosPost() {}
 
-  consultarPostxUsuario (emailUser) {
-    
-  }
+  consultarPostxUsuario(emailUser) {}
 
-  obtenerTemplatePostVacio () {
-    return `<article class="post">
-      <div class="post-titulo">
-          <h5>Crea el primer Post a la comunidad</h5>
-      </div>
-      <div class="post-calificacion">
-          <a class="post-estrellita-llena" href="*"></a>
-          <a class="post-estrellita-llena" href="*"></a>
-          <a class="post-estrellita-llena" href="*"></a>
-          <a class="post-estrellita-llena" href="*"></a>
-          <a class="post-estrellita-vacia" href="*"></a>
-      </div>
-      <div class="post-video">
-          <iframe type="text/html" width="500" height="385" src='https://www.youtube.com/embed/bTSWzddyL7E?ecver=2'
-              frameborder="0"></iframe>
-          </figure>
-      </div>
-      <div class="post-videolink">
-          Video
-      </div>
-      <div class="post-descripcion">
-          <p>Crea el primer Post a la comunidad</p>
-      </div>
-      <div class="post-footer container">         
-      </div>
-  </article>`
-  }
+  obtenerTemplatePostVacio() {}
 
-  obtenerPostTemplate (
+  obtenerPostTemplate(
     autor,
     titulo,
     descripcion,
@@ -84,7 +69,7 @@ class Post {
                     </div>        
                 </div>
             </div>
-        </article>`
+        </article>`;
     }
 
     return `<article class="post">
@@ -119,6 +104,6 @@ class Post {
                         </div>        
                     </div>
                 </div>
-            </article>`
+            </article>`;
   }
 }

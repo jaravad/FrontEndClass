@@ -47,6 +47,7 @@
               id="name"
               placeholder="Nombre"
               required
+              value="Jesus"
             />
           </div>
 
@@ -60,6 +61,7 @@
                   name="doc"
                   id="cc"
                   value="cc"
+                  checked
                 />
                 <label class="custom-control-label" for="cc">
                   CC
@@ -106,6 +108,7 @@
               maxlength="16"
               placeholder="Número"
               required
+              value="1007951289"
             />
           </div>
 
@@ -120,11 +123,18 @@
               id="email"
               placeholder="Ingresa tu correo"
               required
+              value="jesusdavid2607@gmail.com"
             />
           </div>
 
           <div class="custom-file form-group mb-1">
-            <input type="file" class="custom-file-input" id="img" required />
+            <input
+              type="file"
+              class="custom-file-input"
+              name="img"
+              id="img"
+              value="C:\fakepath\flame.png"
+            />
             <label class="custom-file-label text-left overflow-hidden" for="img"
               >Logo de la empresa</label
             >
@@ -142,6 +152,7 @@
                 id="empname"
                 placeholder="Digite nombre"
                 required
+                value="Google"
               />
             </div>
             <div class="w-50 pl-2">
@@ -156,6 +167,7 @@
                 id="numtel"
                 placeholder="Digite teléfono"
                 required
+                value="3183519851"
               />
             </div>
           </div>
@@ -171,6 +183,7 @@
               id="password"
               placeholder="Digite contraseña"
               required
+              value="123456789"
             />
           </div>
 
@@ -195,9 +208,12 @@
 
     <script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-auth.js"></script>
+
+    <script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-firestore.js"></script>
     <script src="./js/config/ConfigFirebase.js"></script>
 
     <script type="text/javascript" src="./js/general.js"></script>
+    <script src="./js/post/Post.js"></script>
     <script type="text/javascript" src="./js/auth/Authentication.js"></script>
     <script type="text/javascript" src="./js/auth/signUp.js"></script>
 

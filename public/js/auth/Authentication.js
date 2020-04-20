@@ -22,17 +22,15 @@ class Authentication {
       });
   }
 
-  crearCuentaEmailPass(email, password, nombre) {
+  crearCuentaEmailPass(email, password, userData) {
     firebase
       .auth()
       .createUserWithEmailAndPassword(email, password)
       .then((result) => {
-        result.user.updateProfile({
-          displayName: nombre,
-        });
-
+        const post = new Post();
+        post.createUser(result.user.uid, userData);
         const configuracion = {
-          url: 'http://localhost:5500/',
+          url: 'http://localhost:5000/',
         };
 
         result.user.sendEmailVerification(configuracion).catch((error) => {
@@ -48,7 +46,7 @@ class Authentication {
         firebase.auth().signOut();
 
         Swal.fire(
-          `Bienvenido! ${nombre}`,
+          'Bienvenido!',
           'Te hemos enviado un email para que verifiques tu cuenta!',
           'success'
         );
