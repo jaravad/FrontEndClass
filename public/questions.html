@@ -21,6 +21,7 @@
       href="https://fonts.googleapis.com/icon?family=Material+Icons"
       rel="stylesheet"
     />
+    <link rel="stylesheet" href="./css/log-in-styles.css" />
     <link rel="stylesheet" href="./css/dashboard.css" />
     <title>Preguntas - Sheal</title>
   </head>
@@ -82,15 +83,187 @@
     </nav>
 
     <section class="container-fluid" style="padding-top: 5.5em;">
-      <h3 class="pl-3 font-weight-light mb-4">Preguntas</h3>
+      <div class="pl-3 d-flex align-items-center mb-4">
+        <h4 class="mb-0 mr-5 font-weight-light">Preguntas</h4>
+        <button
+          class="btn btn-primary"
+          type="submit"
+          data-toggle="modal"
+          data-target="#addQuestion"
+        >
+          Añadir pregunta
+        </button>
+      </div>
+      <!-- modal -->
+      <div
+        class="modal fade"
+        id="addQuestion"
+        tabindex="-1"
+        role="dialog"
+        aria-labelledby="addQuestionTitle"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLongTitle">
+                Añade una pregunta
+              </h5>
+              <button
+                type="button"
+                class="close"
+                data-dismiss="modal"
+                aria-label="Close"
+              >
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <form
+              class="modal-body mx-auto"
+              style="width: 90%;"
+              name="newQuestion"
+              onsubmit="return false"
+            >
+              <div class="form-group w-100 mb-1">
+                <label for="title" class="w-100 text-left d-block"
+                  ><h6 class="m-0">Título de la pregunta</h6></label
+                >
+                <input
+                  type="text"
+                  class="form-control mb-1 w-100"
+                  id="title"
+                  name="title"
+                  placeholder="Título"
+                  required
+                />
+              </div>
 
-      <article class="row no-gutters p-hk">
+              <div class="form-group w-100">
+                <label for="question" class="text-left w-100"
+                  ><h6 class="m-0">Pregunta</h6></label
+                >
+                <textarea
+                  class="form-control mb-2 w-100"
+                  style="resize: none;"
+                  id="question"
+                  rows="3"
+                  name="question"
+                  required
+                ></textarea>
+
+                <h5>Opciones de respuesta</h5>
+                <div class="row no-gutters mb-1">
+                  <div class="col-9 pr-2">
+                    <input
+                      type="text"
+                      class="form-control"
+                      placeholder="Digite opción"
+                      name="op-1"
+                      required
+                    />
+                  </div>
+                  <div class="col-3 pl-2">
+                    <input
+                      type="number"
+                      max="10"
+                      min="0"
+                      class="form-control"
+                      placeholder="valor"
+                      name="op-1-val"
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div class="row no-gutters mb-1">
+                  <div class="col-9 pr-2">
+                    <input
+                      type="text"
+                      class="form-control"
+                      placeholder="Digite opción"
+                      name="op-2"
+                      required
+                    />
+                  </div>
+                  <div class="col-3 pl-2">
+                    <input
+                      type="number"
+                      max="10"
+                      min="0"
+                      class="form-control"
+                      name="op-2-val"
+                      placeholder="valor"
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div class="row no-gutters mb-1">
+                  <div class="col-9 pr-2">
+                    <input
+                      type="text"
+                      class="form-control"
+                      placeholder="Digite opción"
+                      name="op-3"
+                      required
+                    />
+                  </div>
+                  <div class="col-3 pl-2">
+                    <input
+                      type="number"
+                      max="10"
+                      min="0"
+                      class="form-control"
+                      placeholder="valor"
+                      name="op-3-val"
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div class="row no-gutters">
+                  <div class="col-9 pr-2">
+                    <input
+                      type="text"
+                      class="form-control"
+                      placeholder="Digite opción"
+                      name="op-4"
+                      required
+                    />
+                  </div>
+                  <div class="col-3 pl-2">
+                    <input
+                      type="number"
+                      max="10"
+                      min="0"
+                      class="form-control"
+                      placeholder="valor"
+                      name="op-4-val"
+                      required
+                    />
+                  </div>
+                </div>
+              </div>
+              <button
+                type="submit"
+                onclick="addQuestion()"
+                data-dismiss="modal"
+                class="text-uppercase font-weight-bold w-100 mb-4 btn btn-primary"
+              >
+                Añadir
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <article class="row no-gutters p-hk" id="questionsContainer">
         <article class="col-12 col-md-6 pl-2 pr-2 mb-4">
           <div class="w-100 h-100 soft p-3 d-flex align-items-center globe">
             <div class="ml-auto mr-sm-5">
               <h4 class="mb-2 font-weight-normal text-right">Preguntas</h4>
               <div class="d-flex align-items-start justify-content-end color-1">
-                <h3 class="mr-4">5</h3>
+                <h3 class="mr-4" id="questionsCount">5</h3>
                 <i class="material-icons">
                   help
                 </i>
@@ -105,85 +278,6 @@
                   assessment
                 </i>
               </div>
-            </div>
-          </div>
-        </article>
-
-        <article class="col-12 col-md-6 pl-2 pr-2 mb-4">
-          <div class="w-100 soft p-3">
-            <h5 class="text-dark ml-2">Pregunta 1</h5>
-            <p class="mb-2">
-              ¿Chocolate tootsie roll jelly soufflé chocolate bar. Dragée
-              lollipop croissant powder. Carrot cake brownie cheesecake candy
-              carrot cake biscuit?
-            </p>
-            <h6 class="text-secondary ml-2 mb-2">Opciones de respuesta</h6>
-
-            <div class="d-flex align-items-center custom-control custom-radio">
-              <input
-                class="custom-control-input"
-                type="radio"
-                name="p1"
-                id="p1a"
-                value="right"
-              />
-              <label class="custom-control-label" for="p1a">
-                <p class="mb-2">
-                  Gingerbread chocolate cookie.
-                </p>
-              </label>
-            </div>
-
-            <div class="d-flex align-items-center custom-control custom-radio">
-              <input
-                class="custom-control-input"
-                type="radio"
-                name="p1"
-                id="p1b"
-                value="wrong"
-              />
-              <label class="custom-control-label" for="p1b">
-                <p class="mb-2">Gingerbread chocolate cookie.</p>
-              </label>
-            </div>
-
-            <div class="d-flex align-items-center custom-control custom-radio">
-              <input
-                class="custom-control-input"
-                type="radio"
-                name="p1"
-                id="p1c"
-                value="wrong"
-              />
-              <label class="custom-control-label" for="p1c">
-                <p class="mb-2">Gingerbread chocolate cookie.</p>
-              </label>
-            </div>
-
-            <div class="d-flex align-items-center custom-control custom-radio">
-              <input
-                class="custom-control-input"
-                type="radio"
-                name="p1"
-                id="p1d"
-                value="wrong"
-              />
-              <label class="custom-control-label" for="p1d">
-                <p class="mb-2">Gingerbread chocolate cookie.</p>
-              </label>
-            </div>
-
-            <div class="d-flex align-items-center custom-control custom-radio">
-              <input
-                class="custom-control-input"
-                type="radio"
-                name="p1"
-                id="p1d"
-                value="wrong"
-              />
-              <label class="custom-control-label" for="p1d">
-                <p class="mb-2">Gingerbread chocolate cookie.</p>
-              </label>
             </div>
           </div>
         </article>
@@ -202,6 +296,7 @@ Icing jujubes tiramisu oat cake. Cake fruitcake dragée sugar plum ice cream oat
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+
     <script
       src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
       integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
@@ -217,5 +312,7 @@ Icing jujubes tiramisu oat cake. Cake fruitcake dragée sugar plum ice cream oat
       integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
       crossorigin="anonymous"
     ></script>
+
+    <script src="./js/questions.js"></script>
   </body>
 </html>
