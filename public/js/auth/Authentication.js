@@ -22,13 +22,11 @@ class Authentication {
       });
   }
 
-  crearCuentaEmailPass(email, password, userData) {
+  crearCuentaEmailPass(email, password) {
     firebase
       .auth()
       .createUserWithEmailAndPassword(email, password)
       .then((result) => {
-        const post = new Post();
-        post.createUser(result.user.uid, userData);
         const configuracion = {
           url: 'http://localhost:5000/',
         };

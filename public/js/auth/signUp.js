@@ -5,6 +5,7 @@ form.addEventListener('submit', function handleFormSubmit(event) {
   const email = form['email'].value;
   const password = form['password'].value;
   const userData = {
+    email: form['email'].value,
     name: form['name'].value,
     doc: form['doc'].value,
     numdoc: form['numdoc'].value,
@@ -17,6 +18,9 @@ form.addEventListener('submit', function handleFormSubmit(event) {
   const auth = new Authentication();
 
   auth.crearCuentaEmailPass(email, password, userData);
+
+  const post = new Post();
+  post.crearEmpresa(userData);
 
   form.reset(); //try
 });

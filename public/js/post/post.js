@@ -3,11 +3,11 @@ class Post {
     this.db = firebase.firestore();
   }
 
-  createUser(uid, userData) {
+  crearEmpresa(userData) {
     return this.db
-      .collection('users')
-      .add({
-        uid: uid,
+      .collection('empresas')
+      .doc(userData.email)
+      .set({
         name: userData.name,
         doc: userData.doc,
         numdoc: userData.numdoc,
