@@ -16,10 +16,10 @@ class Post {
         phone: userData.phone,
       })
       .then((refDoc) => {
-        console.log(`Id del usuario: ${refDoc.id}`);
+        console.log(`Id del usuario: ${refDoc}`);
       })
       .catch((error) => {
-        console.error('Error al guardar datos del usuario');
+        console.error(error);
       });
   }
 

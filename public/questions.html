@@ -89,7 +89,6 @@
           style="right: 5px; left: unset;"
           aria-labelledby="dropdownUser"
         >
-          
           <a class="dropdown-item" href="#">Cerrar sesión</a>
         </div>
       </div>
@@ -135,22 +134,7 @@
               class="modal-body mx-auto"
               style="width: 90%;"
               name="newQuestion"
-              onsubmit="return false"
             >
-              <div class="form-group w-100 mb-1">
-                <label for="title" class="w-100 text-left d-block"
-                  ><h6 class="m-0">Título de la pregunta</h6></label
-                >
-                <input
-                  type="text"
-                  class="form-control mb-1 w-100"
-                  id="title"
-                  name="title"
-                  placeholder="Título"
-                  required
-                />
-              </div>
-
               <div class="form-group w-100">
                 <label for="question" class="text-left w-100"
                   ><h6 class="m-0">Pregunta</h6></label
@@ -259,8 +243,6 @@
               </div>
               <button
                 type="submit"
-                onclick="addQuestion()"
-                data-dismiss="modal"
                 class="text-uppercase font-weight-bold w-100 mb-4 btn btn-primary"
               >
                 Añadir
@@ -276,7 +258,7 @@
             <div class="ml-auto mr-sm-5">
               <h4 class="mb-2 font-weight-normal text-right">Preguntas</h4>
               <div class="d-flex align-items-start justify-content-end color-1">
-                <h3 class="mr-4" id="questionsCount">5</h3>
+                <h3 class="mr-4" id="questionsCount">0</h3>
                 <i class="material-icons">
                   help
                 </i>
@@ -325,6 +307,13 @@ Icing jujubes tiramisu oat cake. Cake fruitcake dragée sugar plum ice cream oat
       integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
       crossorigin="anonymous"
     ></script>
+    <script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-auth.js"></script>
+
+    <script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-firestore.js"></script>
+    <script src="./js/config/ConfigFirebase.js"></script>
+
+    <script type="text/javascript" src="./js/general.js"></script>
 
     <script src="./js/questions.js"></script>
   </body>

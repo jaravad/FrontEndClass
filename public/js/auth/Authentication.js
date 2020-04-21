@@ -10,6 +10,7 @@ class Authentication {
             'Has iniciado sesión!',
             'success'
           );
+          window.location.href = 'http://localhost:5500/questions.html';
         } else {
           firebase.auth().signOut();
           Swal.fire({
@@ -28,26 +29,29 @@ class Authentication {
       .createUserWithEmailAndPassword(email, password)
       .then((result) => {
         const configuracion = {
-          url: 'http://localhost:5000/',
+          url: 'http://localhost:5500/',
         };
 
-        result.user.sendEmailVerification(configuracion).catch((error) => {
-          console.error(error);
-          Swal.fire({
-            title: 'Error!',
-            text: 'Error en enviar email de confirmación',
-            icon: 'error',
-            confirmButtonText: 'Ok',
+        result.user
+          .sendEmailVerification(configuracion)
+          .then((result) => {
+            firebase.auth().signOut();
+
+            Swal.fire(
+              'Bienvenido!',
+              'Te hemos enviado un email para que verifiques tu cuenta!',
+              'success'
+            );
+          })
+          .catch((error) => {
+            console.error(error);
+            Swal.fire({
+              title: 'Error!',
+              text: 'Error en enviar email de confirmación',
+              icon: 'error',
+              confirmButtonText: 'Ok',
+            });
           });
-        });
-
-        firebase.auth().signOut();
-
-        Swal.fire(
-          'Bienvenido!',
-          'Te hemos enviado un email para que verifiques tu cuenta!',
-          'success'
-        );
       })
       .catch((error) => {
         console.error(error);

@@ -1,21 +1,73 @@
+let n = 1;
+
 const updateCount = () => {
-  $('#questionsCount').html($('#questionsContainer').children().length - 1);
+  $('#questionsCount').html(n - 1);
 };
 
-updateCount();
-const addQuestion = () => {
-  const form = document.forms['newQuestion'];
-  const question = {
-    title: form['title'].value,
-    question: form['question'].value,
-    options: {
-      one: { opTitle: form['op-1'].value, opValue: form['op-1-val'].value },
-      two: { opTitle: form['op-2'].value, opValue: form['op-2-val'].value },
-      three: { opTitle: form['op-3'].value, opValue: form['op-3-val'].value },
-      four: { opTitle: form['op-4'].value, opValue: form['op-4-val'].value },
-    },
-  };
+const auth = firebase.auth();
+const db = firebase.firestore();
 
+const displayQuestions = (user) => {
+  db.collection('empresas')
+    .doc(user.email)
+    .collection('preguntas')
+    .get()
+    .then((snapshot) => {
+      snapshot.docs.forEach((doc) => {
+        appendQuestion(doc.data());
+        n = snapshot.docs.length + 1;
+        updateCount();
+      });
+    });
+};
+
+auth.onAuthStateChanged(function (user) {
+  if (user) {
+    displayQuestions(user);
+
+    console.log(user.email);
+    const form = document.forms['newQuestion'];
+    form.addEventListener('submit', function handleFormSubmit(event) {
+      event.preventDefault();
+      addQuestion();
+      form.reset();
+      $('#addQuestion').modal('hide');
+    });
+
+    const addQuestion = () => {
+      const question = {
+        title: `Pregunta ${n}`,
+        question: form['question'].value,
+        options: {
+          one: { opTitle: form['op-1'].value, opValue: form['op-1-val'].value },
+          two: { opTitle: form['op-2'].value, opValue: form['op-2-val'].value },
+          three: {
+            opTitle: form['op-3'].value,
+            opValue: form['op-3-val'].value,
+          },
+          four: {
+            opTitle: form['op-4'].value,
+            opValue: form['op-4-val'].value,
+          },
+        },
+      };
+
+      n += 1;
+
+      db.collection('empresas')
+        .doc(user.email)
+        .collection('preguntas')
+        .add(question)
+        .then(appendQuestion(question));
+
+      updateCount();
+    };
+  } else {
+    // No user is signed in.
+  }
+});
+
+const appendQuestion = (question) => {
   $('#questionsContainer')
     .append(`<article class="col-12 col-md-6 pl-2 pr-2 mb-4">
   <div class="w-100 soft p-3">
@@ -81,6 +133,5 @@ const addQuestion = () => {
 
   </div>
 </article>`);
-
   updateCount();
 };
