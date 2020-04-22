@@ -25,6 +25,7 @@
     <title>Operadores - Sheal</title>
     <script src="https://www.gstatic.com/firebasejs/7.2.3/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.2.3/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-auth.js"></script>
   </head>
 
   <body>
@@ -293,7 +294,7 @@
                 id="orangeForm-name"
                 class="form-control validate"
                 placeholder="Digite nombre"
-              />
+              required/>
             </div>
             <div class="md-form mb-2">
               <i class="fas fa-envelope prefix grey-text"></i>
@@ -308,7 +309,7 @@
                 id="orangeForm-email"
                 class="form-control validate"
                 placeholder="Digite email"
-              />
+              required/>
             </div>
 
             <div class="md-form mb-4">
@@ -324,7 +325,7 @@
                 id="orangeForm-pass"
                 class="form-control validate"
                 placeholder="Digite contraseña"
-              />
+              required/>
             </div>
           </div>
           <div
