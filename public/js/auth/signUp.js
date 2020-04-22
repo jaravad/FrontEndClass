@@ -33,6 +33,11 @@ form.addEventListener('submit', function handleFormSubmit(event) {
       result.user.sendEmailVerification(configuracion);
     })
     .then((result) => {
+      Swal.fire(
+        `Listo! ${result.user.displayName}`,
+        'Ya casi, verifica tu cuenta con el link que te enviamos por correo',
+        'success'
+      );
       const refStorage = firebase
         .storage()
         .ref(`images/${auth.currentUser.uid}/${file.name}`);
@@ -53,13 +58,7 @@ form.addEventListener('submit', function handleFormSubmit(event) {
         }
       );
     })
-    .then(() => {
-      Swal.fire(
-        `Listo! ${result.user.displayName}`,
-        'Ya casi, verifica tu cuenta con el link que te enviamos por correo',
-        'success'
-      );
-    })
+
     .catch((err) => {
       console.log(err);
     });

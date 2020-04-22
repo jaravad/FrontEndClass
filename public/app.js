@@ -1,6 +1,6 @@
 // Initialize Cloud Firestore through Firebase
 
-var auth = firebase.auth;
+var auth = firebase.auth();
 var db = firebase.firestore();
 const rdb = firebase.database();
 var operadores = 0;
@@ -38,18 +38,6 @@ function crearUsuario() {
   var contraseña = document.getElementById('orangeForm-pass').value;
   firebase.auth().onAuthStateChanged(function (user) {
     if (user) {
-      console.log('Estoy aqui!');
-      corporation = user.email;
-      var usuario = (document.getElementById('dropdownUser').innerHTML = `
-      <img
-              src="./images/faces/user.jpg"
-              width="40"
-              class="rounded-circle mr-3"
-              alt="User photo"
-            />${user.email}<i class="material-icons ml-2">
-              keyboard_arrow_down
-            </i>  
-      `);
       db.collection('users')
         .add({
           empresa: corporation,
@@ -84,8 +72,7 @@ db.collection('users').onSnapshot((querySnapshot) => {
             <article class="person-card col-4 col-sm-3 col-md-2 d-flex flex-column align-items-center">
             <img class="w-50" src="./images/faces/9.jpg" alt="Profile photo" />
             <p>${doc.data().first}</p>
-            <p>${doc.data().last}</p>
-            <p>${doc.data().born}</p>
+            
             <a href="" type="button" class="btn btn-danger my-1" onclick=eliminar('${
               doc.id
             }')>Delete</a>
@@ -105,8 +92,7 @@ db.collection('users').onSnapshot((querySnapshot) => {
             <article class="person-card col-4 col-sm-3 col-md-2 d-flex flex-column align-items-center">
             <img class="w-50" src="./images/faces/9.jpg" alt="Profile photo" />
             <p>${doc.data().first}</p>
-            <p>${doc.data().last}</p>
-            <p>${doc.data().born}</p>
+            
             <a href="" type="button" class="btn btn-danger my-1" onclick=eliminar('${
               doc.id
             }')>Delete</a>
