@@ -5,11 +5,7 @@ class Authentication {
       .signInWithEmailAndPassword(email, password)
       .then((result) => {
         if (result.user.emailVerified) {
-          Swal.fire(
-            `Bienvenido! ${result.user.displayName}`,
-            'Has iniciado sesión!',
-            'success'
-          );
+          Swal.fire(`Bienvenido!`, 'Has iniciado sesión!', 'success');
           window.location.href = 'http://localhost:5500/questions.html';
         } else {
           firebase.auth().signOut();
@@ -20,44 +16,11 @@ class Authentication {
             confirmButtonText: 'Ok',
           });
         }
-      });
-  }
-
-  crearCuentaEmailPass(email, password) {
-    firebase
-      .auth()
-      .createUserWithEmailAndPassword(email, password)
-      .then((result) => {
-        const configuracion = {
-          url: 'http://localhost:5500/',
-        };
-
-        result.user
-          .sendEmailVerification(configuracion)
-          .then((result) => {
-            firebase.auth().signOut();
-
-            Swal.fire(
-              'Bienvenido!',
-              'Te hemos enviado un email para que verifiques tu cuenta!',
-              'success'
-            );
-          })
-          .catch((error) => {
-            console.error(error);
-            Swal.fire({
-              title: 'Error!',
-              text: 'Error en enviar email de confirmación',
-              icon: 'error',
-              confirmButtonText: 'Ok',
-            });
-          });
       })
-      .catch((error) => {
-        console.error(error);
+      .catch(() => {
         Swal.fire({
           title: 'Error!',
-          text: 'No se pudo crear el usuario',
+          text: 'Correo o contraseña incorrectos',
           icon: 'error',
           confirmButtonText: 'Ok',
         });

@@ -5,27 +5,32 @@ const updateCount = () => {
 };
 
 const auth = firebase.auth();
-const db = firebase.firestore();
+const db = firebase.database();
 
 const displayQuestions = (user) => {
-  db.collection('empresas')
-    .doc(user.email)
-    .collection('preguntas')
-    .get()
-    .then((snapshot) => {
-      snapshot.docs.forEach((doc) => {
-        appendQuestion(doc.data());
-        n = snapshot.docs.length + 1;
-        updateCount();
-      });
+  const questionsRef = db.ref(`empresas/${user.uid}/preguntas`);
+  questionsRef.once('value').then(function (snapshot) {
+    const questions = snapshot.val();
+    Object.keys(questions).forEach(function (question) {
+      appendQuestion(questions[question]); // value
     });
+  });
 };
 
 auth.onAuthStateChanged(function (user) {
   if (user) {
     displayQuestions(user);
-
-    console.log(user.email);
+    //photo
+    $('.dropdown-item').click((e) => {
+      auth.signOut().then(() => {
+        window.location.href = 'http://localhost:5500/';
+      });
+    });
+    const photoRef = db.ref(`empresas/${user.uid}`);
+    photoRef.once('value').then(function (snapshot) {
+      $('#userPhoto').attr('src', snapshot.val().img);
+      $('#empName').html(snapshot.val().empname);
+    });
     const form = document.forms['newQuestion'];
     form.addEventListener('submit', function handleFormSubmit(event) {
       event.preventDefault();
@@ -52,15 +57,17 @@ auth.onAuthStateChanged(function (user) {
         },
       };
 
-      n += 1;
-
-      db.collection('empresas')
-        .doc(user.email)
-        .collection('preguntas')
-        .add(question)
-        .then(appendQuestion(question));
-
-      updateCount();
+      db.ref(`empresas/${user.uid}/preguntas/p${n}`).set(question, function (
+        error
+      ) {
+        if (error) {
+          // The write failed...
+        } else {
+          appendQuestion(question);
+          n += 1;
+          updateCount();
+        }
+      });
     };
   } else {
     // No user is signed in.
@@ -81,11 +88,11 @@ const appendQuestion = (question) => {
       <input
         class="custom-control-input"
         type="radio"
-        name="p1"
-        id="p1a"
+        name="p${n}"
+        id="p${n}a"
         value="${question.options.one.opValue}"
       />
-      <label class="custom-control-label" for="p1a">
+      <label class="custom-control-label" for="p${n}a">
         <p class="mb-2">
         ${question.options.one.opTitle}
         </p>
@@ -96,11 +103,11 @@ const appendQuestion = (question) => {
       <input
         class="custom-control-input"
         type="radio"
-        name="p1"
-        id="p1b"
+        name="p${n}"
+        id="p${n}b"
         value="${question.options.two.opValue}"
       />
-      <label class="custom-control-label" for="p1b">
+      <label class="custom-control-label" for="p${n}b">
         <p class="mb-2">${question.options.two.opTitle}</p>
       </label>
     </div>
@@ -109,11 +116,11 @@ const appendQuestion = (question) => {
       <input
         class="custom-control-input"
         type="radio"
-        name="p1"
-        id="p1c"
+        name="p${n}"
+        id="p${n}c"
         value=${question.options.three.opValue}
       />
-      <label class="custom-control-label" for="p1c">
+      <label class="custom-control-label" for="p${n}c">
         <p class="mb-2">${question.options.three.opTitle}</p>
       </label>
     </div>
@@ -122,16 +129,17 @@ const appendQuestion = (question) => {
       <input
         class="custom-control-input"
         type="radio"
-        name="p1"
-        id="p1d"
+        name="p${n}"
+        id="p${n}d"
         value="${question.options.four.opValue}"
       />
-      <label class="custom-control-label" for="p1d">
+      <label class="custom-control-label" for="p${n}d">
         <p class="mb-2">${question.options.four.opTitle}</p>
       </label>
     </div>
 
   </div>
 </article>`);
+  n += 1;
   updateCount();
 };

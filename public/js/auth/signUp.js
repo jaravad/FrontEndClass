@@ -1,28 +1,70 @@
 const form = document.forms['signUpForm'];
+const auth = firebase.auth();
+const db = firebase.database();
 form.addEventListener('submit', function handleFormSubmit(event) {
   event.preventDefault();
 
   const email = form['email'].value;
   const password = form['password'].value;
+  const file = form['img'].files[0];
   const userData = {
-    email: form['email'].value,
     name: form['name'].value,
     doc: form['doc'].value,
     numdoc: form['numdoc'].value,
-    img: form['img'].value,
+    img: '',
     empname: form['empname'].value,
     phone: form['numtel'].value,
   };
-  console.log(userData);
 
-  const auth = new Authentication();
+  // const auth = new Authentication();
 
-  auth.crearCuentaEmailPass(email, password, userData);
+  // auth.crearCuentaEmailPass(email, password, userData);
 
-  const post = new Post();
-  post.crearEmpresa(userData);
+  // const post = new Post();
+  // post.crearEmpresa(userData);
 
-  form.reset(); //try
+  auth
+    .createUserWithEmailAndPassword(email, password)
+    .then((result) => {
+      const configuracion = {
+        url: 'http://localhost:5500/',
+      };
+
+      result.user.sendEmailVerification(configuracion);
+    })
+    .then((result) => {
+      const refStorage = firebase
+        .storage()
+        .ref(`images/${auth.currentUser.uid}/${file.name}`);
+      const task = refStorage.put(file);
+      task.on(
+        'state_changed',
+        null,
+        (err) => {
+          console.log(err);
+        },
+        () => {
+          task.snapshot.ref.getDownloadURL().then((url) => {
+            userData.img = url;
+            db.ref('empresas/' + auth.currentUser.uid).set(userData);
+            auth.logOut();
+            console.log(url);
+          });
+        }
+      );
+    })
+    .then(() => {
+      Swal.fire(
+        `Listo! ${result.user.displayName}`,
+        'Ya casi, verifica tu cuenta con el link que te enviamos por correo',
+        'success'
+      );
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+
+  //try
 });
 
 // avoid letters in numeric inputs
