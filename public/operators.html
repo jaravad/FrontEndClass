@@ -23,9 +23,6 @@
     />
     <link rel="stylesheet" href="./css/dashboard.css" />
     <title>Operadores - Sheal</title>
-    <script src="https://www.gstatic.com/firebasejs/7.2.3/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/7.2.3/firebase-firestore.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-auth.js"></script>
   </head>
 
   <body>
@@ -79,11 +76,16 @@
           style="color: white;"
           href="#"
           ><img
-            src="./images/faces/user.jpg"
+            src="./images/user.png"
             width="40"
-            class="rounded-circle mr-3"
+            height="40"
+            style="object-fit: contain;"
+            class="rounded-lg mr-3"
             alt="User photo"
-          />Phil<i class="material-icons ml-2">
+            id="userPhoto"
+          />
+          <div id="empName"></div>
+          <i class="material-icons ml-2">
             keyboard_arrow_down
           </i></a
         >
@@ -294,7 +296,8 @@
                 id="orangeForm-name"
                 class="form-control validate"
                 placeholder="Digite nombre"
-              required/>
+                required
+              />
             </div>
             <div class="md-form mb-2">
               <i class="fas fa-envelope prefix grey-text"></i>
@@ -309,7 +312,8 @@
                 id="orangeForm-email"
                 class="form-control validate"
                 placeholder="Digite email"
-              required/>
+                required
+              />
             </div>
 
             <div class="md-form mb-4">
@@ -325,7 +329,8 @@
                 id="orangeForm-pass"
                 class="form-control validate"
                 placeholder="Digite contraseña"
-              required/>
+                required
+              />
             </div>
           </div>
           <div
@@ -343,7 +348,6 @@
         </div>
       </div>
     </div>
-    <script src="app.js"></script>
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
@@ -362,6 +366,16 @@
       integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
       crossorigin="anonymous"
     ></script>
+    <script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-database.js"></script>
+    <script src="./js/config/ConfigFirebase.js"></script>
+
+    <script type="text/javascript" src="./js/general.js"></script>
+
+    <script src="app.js"></script>
+
     <!-- Insert these scripts at the bottom of the HTML, but before you use any Firebase services -->
   </body>
 </html>

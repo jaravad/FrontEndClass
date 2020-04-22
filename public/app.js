@@ -1,31 +1,21 @@
 // Initialize Cloud Firestore through Firebase
-firebase.initializeApp({
-  apiKey: 'AIzaSyCAN4OyXQI0Lk88aPt0xHm5ccKRL7nQxok',
-  authDomain: 'shealweb.firebaseapp.com',
-  databaseURL: 'https://shealweb.firebaseio.com',
-  projectId: 'shealweb',
-  storageBucket: 'shealweb.appspot.com',
-  messagingSenderId: '783277000882',
-  appId: '1:783277000882:web:64c56eea50441eaddbe1ab',
-  measurementId: 'G-FZMEMCKPXG',
-});
+
 var auth = firebase.auth;
 var db = firebase.firestore();
+const rdb = firebase.database();
 var operadores = 0;
-firebase.auth().onAuthStateChanged(function(user) {
+firebase.auth().onAuthStateChanged(function (user) {
   if (user) {
-    console.log('Estoy aqui!');
-    corporation = user.email;
-    var usuario = document.getElementById("dropdownUser").innerHTML = `
-    <img
-            src="./images/faces/user.jpg"
-            width="40"
-            class="rounded-circle mr-3"
-            alt="User photo"
-          />${user.email}<i class="material-icons ml-2">
-            keyboard_arrow_down
-          </i>  
-    `
+    $('.dropdown-item').click((e) => {
+      auth.signOut().then(() => {
+        window.location.href = 'http://localhost:5500/';
+      });
+    });
+    const photoRef = rdb.ref(`empresas/${user.uid}`);
+    photoRef.once('value').then(function (snapshot) {
+      $('#userPhoto').attr('src', snapshot.val().img);
+      $('#empName').html(snapshot.val().empname);
+    });
   } else {
     // No user is signed in.
   }
@@ -45,12 +35,12 @@ console.log(db.collection('users').doc('uFjwgTld1m0JblYaNBaV').born);
 function crearUsuario() {
   var name = document.getElementById('orangeForm-name').value;
   var email = document.getElementById('orangeForm-email').value;
-  var contraseña = document.getElementById('orangeForm-pass').value; 
-  firebase.auth().onAuthStateChanged(function(user) {
+  var contraseña = document.getElementById('orangeForm-pass').value;
+  firebase.auth().onAuthStateChanged(function (user) {
     if (user) {
       console.log('Estoy aqui!');
       corporation = user.email;
-      var usuario = document.getElementById("dropdownUser").innerHTML = `
+      var usuario = (document.getElementById('dropdownUser').innerHTML = `
       <img
               src="./images/faces/user.jpg"
               width="40"
@@ -59,30 +49,28 @@ function crearUsuario() {
             />${user.email}<i class="material-icons ml-2">
               keyboard_arrow_down
             </i>  
-      `
+      `);
       db.collection('users')
-    .add({
-      empresa: corporation,
-      first: name,
-      last: email,
-      born: contraseña,
-      state: true,
-      respuestas: [0, 0, 0, 0, 0],
-      valor: [0, 0, 0, 0, 0],
-    })
-    .then(function (docRef) {
-      console.log('Document written with ID: ', docRef.id);
-      document.getElementById('orangeForm-name').value = '';
-      document.getElementById('orangeForm-email').value = '';
-      document.getElementById('orangeForm-pass').value = '';
-    })
-    .catch(function (error) {
-      console.error('Error adding document: ', error);
-    })
+        .add({
+          empresa: corporation,
+          first: name,
+          last: email,
+          born: contraseña,
+          state: true,
+          respuestas: [0, 0, 0, 0, 0],
+          valor: [0, 0, 0, 0, 0],
+        })
+        .then(function (docRef) {
+          console.log('Document written with ID: ', docRef.id);
+          document.getElementById('orangeForm-name').value = '';
+          document.getElementById('orangeForm-email').value = '';
+          document.getElementById('orangeForm-pass').value = '';
+        })
+        .catch(function (error) {
+          console.error('Error adding document: ', error);
+        });
     }
   });
-  
-  
 }
 //Mostrar operadores en tiempo real
 var tabla = document.getElementById('operator');

@@ -75,11 +75,16 @@
           style="color: white;"
           href="#"
           ><img
-            src="./images/faces/user.jpg"
+            src="./images/user.png"
             width="40"
-            class="rounded-circle mr-3"
+            height="40"
+            style="object-fit: contain;"
+            class="rounded-lg mr-3"
             alt="User photo"
-          />Phil<i class="material-icons ml-2">
+            id="userPhoto"
+          />
+          <div id="empName"></div>
+          <i class="material-icons ml-2">
             keyboard_arrow_down
           </i></a
         >
@@ -692,5 +697,15 @@
       integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
       crossorigin="anonymous"
     ></script>
+
+    <script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-database.js"></script>
+    <script src="./js/config/ConfigFirebase.js"></script>
+
+    <script type="text/javascript" src="./js/general.js"></script>
+
+    <script src="results.js"></script>
   </body>
 </html>

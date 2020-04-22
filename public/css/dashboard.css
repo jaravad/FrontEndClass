@@ -118,6 +118,10 @@ a:hover {
   color: unset;
 }
 
+#userPhoto {
+  border-radius: 8px;
+}
+
 /*Different font for p*/
 .p-hk p {
   font-family: "hk_grotesk", sans-serif;

@@ -1,5 +1,5 @@
-$hk: "hk_grotesk", sans-serif;
-$josefin: "Josefin Sans", sans-serif;
+$hk: 'hk_grotesk', sans-serif;
+$josefin: 'Josefin Sans', sans-serif;
 $back-color: #f3f3f3;
 
 html {
@@ -17,7 +17,7 @@ body {
   text-shadow: none;
 }
 
-@import url("https://fonts.googleapis.com/css?family=Josefin+Sans:400,600,700&display=swap");
+@import url('https://fonts.googleapis.com/css?family=Josefin+Sans:400,600,700&display=swap');
 
 h1,
 h2,
@@ -109,6 +109,9 @@ a:hover {
   color: unset;
 }
 
+#userPhoto {
+  border-radius: 8px;
+}
 /*Different font for p*/
 .p-hk p {
   font-family: $hk;
@@ -134,5 +137,5 @@ a:hover {
   background-position: bottom left;
   background-repeat: no-repeat;
   background-size: contain;
-  background-image: url("../images/undraw_air_support_wy1q.svg");
+  background-image: url('../images/undraw_air_support_wy1q.svg');
 }
