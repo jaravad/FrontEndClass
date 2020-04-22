@@ -3,6 +3,7 @@
 var auth = firebase.auth();
 var db = firebase.firestore();
 const rdb = firebase.database();
+
 var operadores = 0;
 firebase.auth().onAuthStateChanged(function (user) {
   if (user) {
@@ -36,11 +37,12 @@ function crearUsuario() {
   var name = document.getElementById('orangeForm-name').value;
   var email = document.getElementById('orangeForm-email').value;
   var contraseña = document.getElementById('orangeForm-pass').value;
+  empresa = auth.currentUser.uid;
   firebase.auth().onAuthStateChanged(function (user) {
     if (user) {
       db.collection('users')
         .add({
-          empresa: corporation,
+          empresa: empresa,
           first: name,
           last: email,
           born: contraseña,
@@ -70,7 +72,7 @@ db.collection('users').onSnapshot((querySnapshot) => {
       //Revisa el estado para poner el boton habilitado o deshabilitado
       tabla.innerHTML += `
             <article class="person-card col-4 col-sm-3 col-md-2 d-flex flex-column align-items-center">
-            <img class="w-50" src="./images/faces/9.jpg" alt="Profile photo" />
+            <img class="w-50" src="./images/user.svg" alt="Profile photo" />
             <p>${doc.data().first}</p>
             
             <a href="" type="button" class="btn btn-danger my-1" onclick=eliminar('${
@@ -90,7 +92,7 @@ db.collection('users').onSnapshot((querySnapshot) => {
     } else {
       tabla.innerHTML += `
             <article class="person-card col-4 col-sm-3 col-md-2 d-flex flex-column align-items-center">
-            <img class="w-50" src="./images/faces/9.jpg" alt="Profile photo" />
+            <img class="w-50" src="./images/user.svg" alt="Profile photo" />
             <p>${doc.data().first}</p>
             
             <a href="" type="button" class="btn btn-danger my-1" onclick=eliminar('${

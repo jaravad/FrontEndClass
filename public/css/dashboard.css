@@ -120,6 +120,8 @@ a:hover {
 
 #userPhoto {
   border-radius: 8px;
+  -o-object-fit: contain;
+     object-fit: contain;
 }
 
 /*Different font for p*/
