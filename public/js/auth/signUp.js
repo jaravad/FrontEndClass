@@ -27,7 +27,7 @@ form.addEventListener('submit', function handleFormSubmit(event) {
     .createUserWithEmailAndPassword(email, password)
     .then((result) => {
       const configuracion = {
-        url: 'http://localhost:5500/',
+        url: 'https://shealweb.web.app/',
       };
 
       result.user.sendEmailVerification(configuracion);

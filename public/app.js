@@ -9,7 +9,7 @@ firebase.auth().onAuthStateChanged(function (user) {
   if (user) {
     $('.dropdown-item').click((e) => {
       auth.signOut().then(() => {
-        window.location.href = 'http://localhost:5500/';
+        window.location.href = 'https://shealweb.web.app/';
       });
     });
     const photoRef = rdb.ref(`empresas/${user.uid}`);
