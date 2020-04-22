@@ -4,10 +4,32 @@ firebase.initializeApp({
   authDomain: 'shealweb.firebaseapp.com',
   databaseURL: 'https://shealweb.firebaseio.com',
   projectId: 'shealweb',
+  storageBucket: 'shealweb.appspot.com',
+  messagingSenderId: '783277000882',
+  appId: '1:783277000882:web:64c56eea50441eaddbe1ab',
+  measurementId: 'G-FZMEMCKPXG',
 });
-
+var auth = firebase.auth;
 var db = firebase.firestore();
 var operadores = 0;
+firebase.auth().onAuthStateChanged(function(user) {
+  if (user) {
+    console.log('Estoy aqui!');
+    corporation = user.email;
+    var usuario = document.getElementById("dropdownUser").innerHTML = `
+    <img
+            src="./images/faces/user.jpg"
+            width="40"
+            class="rounded-circle mr-3"
+            alt="User photo"
+          />${user.email}<i class="material-icons ml-2">
+            keyboard_arrow_down
+          </i>  
+    `
+  } else {
+    // No user is signed in.
+  }
+});
 
 //------------------OPERADORES --------------------------
 db.collection('users').onSnapshot((querySnapshot) => {
@@ -23,10 +45,24 @@ console.log(db.collection('users').doc('uFjwgTld1m0JblYaNBaV').born);
 function crearUsuario() {
   var name = document.getElementById('orangeForm-name').value;
   var email = document.getElementById('orangeForm-email').value;
-  var contraseña = document.getElementById('orangeForm-pass').value;
-
-  db.collection('users')
+  var contraseña = document.getElementById('orangeForm-pass').value; 
+  firebase.auth().onAuthStateChanged(function(user) {
+    if (user) {
+      console.log('Estoy aqui!');
+      corporation = user.email;
+      var usuario = document.getElementById("dropdownUser").innerHTML = `
+      <img
+              src="./images/faces/user.jpg"
+              width="40"
+              class="rounded-circle mr-3"
+              alt="User photo"
+            />${user.email}<i class="material-icons ml-2">
+              keyboard_arrow_down
+            </i>  
+      `
+      db.collection('users')
     .add({
+      empresa: corporation,
       first: name,
       last: email,
       born: contraseña,
@@ -42,7 +78,11 @@ function crearUsuario() {
     })
     .catch(function (error) {
       console.error('Error adding document: ', error);
-    });
+    })
+    }
+  });
+  
+  
 }
 //Mostrar operadores en tiempo real
 var tabla = document.getElementById('operator');
@@ -117,7 +157,9 @@ function habilitar(id, name, email, contraseña) {
 }
 //A veces funciona, aveces no. Revisar
 function eliminar(id) {
-  db.collection('users')
+  fb.usersCollection.doc(id).delete;
+  //var deleteDoc = db.collection('users').doc(id).delete();
+  /*db.collection('users')
     .doc(id)
     .delete()
     .then(function () {
@@ -125,7 +167,7 @@ function eliminar(id) {
     })
     .catch(function (error) {
       console.error('Error removing document: ', error);
-    });
+    });*/
 }
 
 //Arreglar el state
