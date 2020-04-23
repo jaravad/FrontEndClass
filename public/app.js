@@ -36,9 +36,8 @@ function crearUsuario() {
   var name = document.getElementById('orangeForm-name').value;
   var email = document.getElementById('orangeForm-email').value;
   var contraseña = document.getElementById('orangeForm-pass').value;
-
   firebase.auth().onAuthStateChanged(function (user) {
-    if (user) {
+    if (user==originalUser) {
       console.log(user.uid);
       function arrayJSON(id, empresa, name, password, estado) {
         var data = {
@@ -134,7 +133,8 @@ function eliminar(id) {
 }
 
 //Arreglar el state
-function update(id, name, email, contraseña, estado) {
+function update(id, name, email, contraseña, state) {
+  var estado=state;
   document.getElementById('orangeForm-name').value = name;
   document.getElementById('orangeForm-email').value = email;
   document.getElementById('orangeForm-pass').value = contraseña;
@@ -156,11 +156,12 @@ function update(id, name, email, contraseña, estado) {
         empresa: empresa,
         name: name,
         password: password,
-        estado: estado,
+        //estado: estado,
       };
       return data;
     }
     var arrayData = arrayJSON(id, email, name, contraseña, estado);
+    console.log(arrayData);
     var task = firebase.database().ref('Operadores/' + id);
     task.set(arrayData);
 
