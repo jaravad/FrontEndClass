@@ -57,7 +57,7 @@ function crearUsuario() {
         .createUserWithEmailAndPassword(email, contraseña)
         .then((result) => {
           result.user.updateProfile({
-            displayName: 'empresa',
+            displayName: 'usuario',
           });
 
         })
@@ -70,11 +70,31 @@ function mostrar(){
   task.on("child_added",function(data){
     var Taskvalue=data.val();
     console.log(Taskvalue.name);
+    var tabla = document.getElementById('operator');
+    tabla.innerHTML += `
+            <article class="person-card col-4 col-sm-3 col-md-2 d-flex flex-column align-items-center">
+            <img class="w-50" src="./images/user.svg" alt="Profile photo" />
+            <p>${Taskvalue.name}</p>
+            
+            <a href="" type="button" class="btn btn-danger my-1" onclick=eliminar('{
+              doc.id
+            }')>Delete</a>
+            <a href="" type="button" class="btn btn-primary my-1" data-toggle="modal" data-target="#modalRegisterForm" onclick=update('{
+              doc.id
+            }','{doc.data().first}','{doc.data().last}','{
+        doc.data().born
+      }')>Update</button>
+            <a href="" type="button" class="btn btn-success my-1" onclick=habilitar('{
+              doc.id
+            }','{doc.data().first}','{doc.data().last}','{
+        doc.data().born
+      }')>Habilitado</a>
+            </article>`;
   })
 }
 //Mostrar operadores en tiempo real
 var tabla = document.getElementById('operator');
-db.collection('users').onSnapshot((querySnapshot) => {
+/*db.collection('users').onSnapshot((querySnapshot) => {
   tabla.innerHTML = '';
   querySnapshot.forEach((doc) => {
     console.log(`${doc.id} => ${doc.data()}`);
@@ -121,7 +141,7 @@ db.collection('users').onSnapshot((querySnapshot) => {
             </article>`;
     }
   });
-});
+});*/
 
 //Funcion con error
 function habilitar(id, name, email, contraseña) {
