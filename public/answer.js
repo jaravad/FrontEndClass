@@ -62,12 +62,12 @@ auth.onAuthStateChanged(function (user) {
       $('#empName').html(snapshot.val().empname);
     });
 
-    form.addEventListener('submit', function handleFormSubmit(event) {
+    /*form.addEventListener('submit', function handleFormSubmit(event) {
       event.preventDefault();
       addQuestion(user);
       form.reset();
       $('#addQuestion').modal('hide');
-    });
+    });*/
   } else {
     // No user is signed in.
   }
@@ -142,4 +142,37 @@ const appendQuestion = (question) => {
 </article>`);
   n += 1;
   updateCount();
+};
+
+function enviarTest() {
+  console.log('submitted');
+  total = document.getElementsByClassName('col-12 col-md-6 pl-2 pr-2 mb-4').length -1;
+  
+    function answerScore (i) {
+      var radiosNo = [document.getElementById(`p${i+1}a`),
+      document.getElementById(`p${i+1}b`),
+      document.getElementById(`p${i+1}c`),
+      document.getElementById(`p${i+1}d`),];
+      console.log(radiosNo)
+      for (var j = 0, length = radiosNo.length; j < length; j++) {
+        console.log(radiosNo[j]);   
+        if (radiosNo[j].checked) {
+            var answerValue = Number(radiosNo[j]);
+        }
+      }
+      if (isNaN(answerValue)) {
+        answerValue = 0;
+      }
+      //return answerValue;
+    }
+    answerScore(0)
+    console.log()
+    /*var puntaje = (answerScore('p1') + answerScore('p2') + answerScore('p3') + answerScore('p4')+ answerScore('p5'));
+    console.log("puntaje: " + puntaje); // it works!
+    var questionCountArray = document.getElementsByClassName('question');
+    var totalPreguntas = 5;
+    var mostrarPuntaje = "Preguntas Correctas: " + puntaje +"/" + totalPreguntas;
+    document.getElementById('resultado').innerHTML = mostrarPuntaje;*/
+  
+
 };
