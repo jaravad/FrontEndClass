@@ -23,7 +23,7 @@
     />
     <link rel="stylesheet" href="./css/log-in-styles.css" />
     <link rel="stylesheet" href="./css/dashboard.css" />
-    <title>Preguntas - Sheal</title>
+    <title>Responder Test - Sheal</title>
   </head>
   <body>
     <nav class="navbar fixed-top navbar-expand-md navbar-dark d-flex">
@@ -54,7 +54,9 @@
       <div class="collapse navbar-collapse order-3 order-md-2" id="navbarNav">
         <ul class="navbar-nav">
           <li class="nav-item">
-            <a class="nav-link active" href="./questions.html">Preguntas</a>
+            <a class="nav-link active" href="./questions.html"
+              >Responder Test</a
+            >
           </li>
           <li class="nav-item">
             <a class="nav-link active" href="./results.html">Resultados</a>
@@ -95,190 +97,16 @@
       </div>
     </nav>
 
-    <section class="container-fluid" style="padding-top: 5.5em;">
+    <form class="container-fluid" style="padding-top: 5.5em;" name="answers">
       <div class="pl-3 d-flex align-items-center mb-4">
         <h4 class="mb-0 mr-5 font-weight-light">Responder Test</h4>
-        <button
-          class="btn btn-success"
-          type="submit"
-          data-toggle="modal"
-          data-target="#addQuestion"
-        >
+        <button class="btn btn-success" type="submit">
           Enviar test
         </button>
       </div>
-      <!-- modal -->
-      <div
-        class="modal fade"
-        id="addQuestion"
-        tabindex="-1"
-        role="dialog"
-        aria-labelledby="addQuestionTitle"
-        aria-hidden="true"
-      >
-        <div class="modal-dialog modal-dialog-centered" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLongTitle">
-                Añade una pregunta
-              </h5>
-              <button
-                type="button"
-                class="close"
-                data-dismiss="modal"
-                aria-label="Close"
-              >
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <form
-              class="modal-body mx-auto"
-              style="width: 90%;"
-              name="newQuestion"
-            >
-              <div class="form-group w-100">
-                <label for="question" class="text-left w-100"
-                  ><h6 class="m-0">Pregunta</h6></label
-                >
-                <textarea
-                  class="form-control mb-2 w-100"
-                  style="resize: none;"
-                  id="question"
-                  rows="3"
-                  name="question"
-                  required
-                ></textarea>
 
-                <h5>Opciones de respuesta</h5>
-                <div class="row no-gutters mb-1">
-                  <div class="col-9 pr-2">
-                    <input
-                      type="text"
-                      class="form-control"
-                      placeholder="Digite opción"
-                      name="op-1"
-                      required
-                    />
-                  </div>
-                  <div class="col-3 pl-2">
-                    <input
-                      type="number"
-                      max="10"
-                      min="0"
-                      class="form-control"
-                      placeholder="valor"
-                      name="op-1-val"
-                      required
-                    />
-                  </div>
-                </div>
-
-                <div class="row no-gutters mb-1">
-                  <div class="col-9 pr-2">
-                    <input
-                      type="text"
-                      class="form-control"
-                      placeholder="Digite opción"
-                      name="op-2"
-                      required
-                    />
-                  </div>
-                  <div class="col-3 pl-2">
-                    <input
-                      type="number"
-                      max="10"
-                      min="0"
-                      class="form-control"
-                      name="op-2-val"
-                      placeholder="valor"
-                      required
-                    />
-                  </div>
-                </div>
-
-                <div class="row no-gutters mb-1">
-                  <div class="col-9 pr-2">
-                    <input
-                      type="text"
-                      class="form-control"
-                      placeholder="Digite opción"
-                      name="op-3"
-                      required
-                    />
-                  </div>
-                  <div class="col-3 pl-2">
-                    <input
-                      type="number"
-                      max="10"
-                      min="0"
-                      class="form-control"
-                      placeholder="valor"
-                      name="op-3-val"
-                      required
-                    />
-                  </div>
-                </div>
-
-                <div class="row no-gutters">
-                  <div class="col-9 pr-2">
-                    <input
-                      type="text"
-                      class="form-control"
-                      placeholder="Digite opción"
-                      name="op-4"
-                      required
-                    />
-                  </div>
-                  <div class="col-3 pl-2">
-                    <input
-                      type="number"
-                      max="10"
-                      min="0"
-                      class="form-control"
-                      placeholder="valor"
-                      name="op-4-val"
-                      required
-                    />
-                  </div>
-                </div>
-              </div>
-              <button
-                type="submit"
-                class="text-uppercase font-weight-bold w-100 mb-4 btn btn-primary"
-              >
-                Añadir
-              </button>
-            </form>
-          </div>
-        </div>
-      </div>
-
-      <form class="row no-gutters p-hk" id="questionsContainer" name="answers">
-        <article class="col-12 col-md-6 pl-2 pr-2 mb-4">
-          <div class="w-100 h-100 soft p-3 d-flex align-items-center globe">
-            <div class="ml-auto mr-sm-5">
-              <h4 class="mb-2 font-weight-normal text-right">Preguntas</h4>
-              <div class="d-flex align-items-start justify-content-end color-1">
-                <h3 class="mr-4" id="questionsCount">0</h3>
-                <i class="material-icons">
-                  help
-                </i>
-              </div>
-
-              <h4 class="mb-2 font-weight-normal text-right">
-                Tests realizados
-              </h4>
-              <div class="d-flex align-items-start justify-content-end color-2">
-                <h3 class="mr-4">12</h3>
-                <i class="material-icons">
-                  assessment
-                </i>
-              </div>
-            </div>
-          </div>
-        </article>
-      </form>
-    </section>
+      <article class="row no-gutters p-hk" id="questionsContainer"></article>
+    </form>
 
     <!-- Muffin croissant dragée jelly-o marshmallow wafer. Tiramisu cake sweet. Gingerbread cupcake macaroon jelly-o pastry topping dragée marzipan.
 
