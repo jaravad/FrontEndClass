@@ -23,7 +23,9 @@ form.addEventListener('submit', function handleFormSubmit(event) {
   auth
     .createUserWithEmailAndPassword(email, password)
     .then((result) => {
-      result.user.displayName = 'empresa';
+      result.user.updateProfile({
+        displayName: 'empresa',
+      });
       const configuracion = {
         url: 'http://localhost:5500/',
       };
@@ -59,7 +61,22 @@ form.addEventListener('submit', function handleFormSubmit(event) {
     })
 
     .catch((err) => {
-      console.log(err);
+      if (err.code === 'auth/email-already-in-use') {
+        Swal.fire({
+          title: 'Error!',
+          text: 'Este email ya se encuentra registrado',
+          icon: 'error',
+          confirmButtonText: 'Ok',
+        });
+      } else {
+        Swal.fire({
+          title: 'Error!',
+          text: 'Ha ocurrido un error al registrar la cuenta',
+          icon: 'error',
+          confirmButtonText: 'Ok',
+        });
+        form.reset();
+      }
     });
 
   //try

@@ -23,7 +23,7 @@ auth.onAuthStateChanged(function (user) {
     //photo
     $('.dropdown-item').click((e) => {
       auth.signOut().then(() => {
-        window.location.href = 'https://shealweb.web.app/';
+        window.location.href = 'http://localhost:5500/';
       });
     });
     const photoRef = db.ref(`empresas/${user.uid}`);
