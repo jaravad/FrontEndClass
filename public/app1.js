@@ -37,7 +37,7 @@ function iniciarSesion() {
             text: 'Su usuario esta habilitado',
             icon: 'success',
           });
-          window.location.href = 'http://localhost:5500/answer.html';
+          window.location.href = 'https://shealweb.web.app/answer.html';
         }
       });
     })

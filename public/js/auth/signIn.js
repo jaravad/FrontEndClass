@@ -39,7 +39,7 @@ const autEmailPass = (email, password) => {
       if (result.user.displayName === 'empresa') {
         if (result.user.emailVerified) {
           Swal.fire(`Bienvenido!`, 'Has iniciado sesión!', 'success');
-          window.location.href = 'http://localhost:5500/questions.html';
+          window.location.href = 'https://shealweb.web.app/questions.html';
         } else {
           firebase.auth().signOut();
           Swal.fire({
@@ -51,7 +51,7 @@ const autEmailPass = (email, password) => {
         }
       } else {
         Swal.fire(`Bienvenido!`, 'Has iniciado sesión!', 'success');
-        window.location.href = 'http://localhost:5500/answer.html';
+        window.location.href = 'https://shealweb.web.app/answer.html';
       }
     })
     .catch(() => {

@@ -54,10 +54,9 @@
       <div class="collapse navbar-collapse order-3 order-md-2" id="navbarNav">
         <ul class="navbar-nav">
           <li class="nav-item">
-            <a class="nav-link active" href="./operators.html">Operadores</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link active" href="./questions.html">Preguntas</a>
+            <a class="nav-link active" href="./questions.html"
+              >Responder Test</a
+            >
           </li>
           <li class="nav-item">
             <a class="nav-link active" href="./results.html">Resultados</a>
@@ -151,10 +150,9 @@
       <h3 class="pl-3 font-weight-light mb-4">Resultados</h3>
       <section class="row">
         <div class="col-sm-8 col-md-8 col-lg-8 active"></div>
-          
-              
-              <canvas id="myChart" width="500" height="500"></canvas>
-                <!--<img
+
+        <canvas id="myChart" width="500" height="500"></canvas>
+        <!--<img
                   class="softer"
                   src="./images/faces/5.jpg"
                   alt="Someone"
@@ -183,49 +181,55 @@
                     <span class="text-secondary">Promedio: </span>4.5
                   </h6>
                 </div>-->
-              
-              
-          
-        </div>
       </section>
     </section>
     <script>
       var ctx = document.getElementById('myChart').getContext('2d');
       var myChart = new Chart(ctx, {
-          type: 'line',
-          data: {
-              labels: ['Pregunta1', 'Pregunta2', 'Pregunta3', 'Pregunta4', 'Pregunta5'],
-              datasets: [{
-                  label: 'Preguntas Correctas',
-                  data: [5, 2, 0, 1, 3],
-                  backgroundColor: [
-                      'rgba(255, 99, 132, 0.2)',
-                      'rgba(54, 162, 235, 0.2)',
-                      'rgba(255, 206, 86, 0.2)',
-                      'rgba(75, 192, 192, 0.2)',
-                      'rgba(153, 102, 255, 0.2)',
-                  ],
-                  borderColor: [
-                      'rgba(255, 99, 132, 1)',
-                      'rgba(54, 162, 235, 1)',
-                      'rgba(255, 206, 86, 1)',
-                      'rgba(75, 192, 192, 1)',
-                      'rgba(153, 102, 255, 1)',
-                  ],
-                  borderWidth: 1
-              }]
+        type: 'line',
+        data: {
+          labels: [
+            'Pregunta1',
+            'Pregunta2',
+            'Pregunta3',
+            'Pregunta4',
+            'Pregunta5',
+          ],
+          datasets: [
+            {
+              label: 'Preguntas Correctas',
+              data: [5, 2, 0, 1, 3],
+              backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+              ],
+              borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+              ],
+              borderWidth: 1,
+            },
+          ],
+        },
+        options: {
+          scales: {
+            yAxes: [
+              {
+                ticks: {
+                  beginAtZero: true,
+                },
+              },
+            ],
           },
-          options: {
-              scales: {
-                  yAxes: [{
-                      ticks: {
-                          beginAtZero: true
-                      }
-                  }]
-              }
-          }
+        },
       });
-      </script>
+    </script>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script
