@@ -31,6 +31,7 @@ const resetPassword = () => {
 };
 
 const autEmailPass = (email, password) => {
+  firebase.auth().signOut();
   firebase
     .auth()
     .signInWithEmailAndPassword(email, password)
