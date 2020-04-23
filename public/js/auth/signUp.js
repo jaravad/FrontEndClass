@@ -20,24 +20,23 @@ form.addEventListener('submit', function handleFormSubmit(event) {
 
   // auth.crearCuentaEmailPass(email, password, userData);
 
-  // const post = new Post();
-  // post.crearEmpresa(userData);
-
   auth
     .createUserWithEmailAndPassword(email, password)
     .then((result) => {
+      result.user.displayName = 'empresa';
       const configuracion = {
-        url: 'https://shealweb.web.app/',
+        url: 'http://localhost:5500/',
       };
 
       result.user.sendEmailVerification(configuracion);
     })
     .then((result) => {
       Swal.fire(
-        `Listo! ${result.user.displayName}`,
+        `Listo!`,
         'Ya casi, verifica tu cuenta con el link que te enviamos por correo',
         'success'
       );
+      form.reset();
       const refStorage = firebase
         .storage()
         .ref(`images/${auth.currentUser.uid}/${file.name}`);
@@ -52,7 +51,7 @@ form.addEventListener('submit', function handleFormSubmit(event) {
           task.snapshot.ref.getDownloadURL().then((url) => {
             userData.img = url;
             db.ref('empresas/' + auth.currentUser.uid).set(userData);
-            auth.logOut();
+
             console.log(url);
           });
         }

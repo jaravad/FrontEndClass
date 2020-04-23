@@ -9,7 +9,7 @@ firebase
   .createUserWithEmailAndPassword('jesusdavid2607@gmail.com', '123456789')
   .then((result) => {
     const configuracion = {
-      url: 'https://shealweb.web.app/',
+      url: 'http://localhost:5500/',
     };
 
     result.user.sendEmailVerification(configuracion);

@@ -16,13 +16,13 @@ const displayQuestions = (user) => {
   });
 };
 $('.dropdown-item').click((e) => {
-  window.location.href = 'https://shealweb.web.app/';
+  window.location.href = 'http://localhost:5500/';
 });
 
 displayQuestions(empresa);
 //photo
 $('.dropdown-item').click((e) => {
-  window.location.href = 'https://shealweb.web.app/';
+  window.location.href = 'http://localhost:5500/';
 });
 // const photoRef = db.ref(`empresas/${user.uid}`);
 // photoRef.once('value').then(function (snapshot) {
