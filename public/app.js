@@ -32,26 +32,27 @@ db.collection('users').onSnapshot((querySnapshot) => {
 });
 
 function crearUsuario() {
-  let originalUser = Auth.auth().currentUser;
+  let originalUser = firebase.auth().currentUser;
   var name = document.getElementById('orangeForm-name').value;
   var email = document.getElementById('orangeForm-email').value;
   var contraseña = document.getElementById('orangeForm-pass').value;
   var user = firebase.auth().currentUser;
   firebase.auth().onAuthStateChanged(function (user) {
     if (user) {
-      console.log('entre');
-      function arrayJSON(empresa, name, password) {
+      console.log(user.uid);
+      function arrayJSON(id,empresa, name, password, estado) {
         var data = {
+          id:id,
           empresa: empresa,
           name: name,
           password: password,
+          estado: estado,
         };
         return data;
       }
-      var arrayData = arrayJSON(email, name, contraseña);
+      var arrayData = arrayJSON(user.uid, email, name, contraseña, true);
       var task = firebase.database().ref('Operadores/' + user.uid);
       task.set(arrayData);
-
       auth
         .createUserWithEmailAndPassword(email, contraseña)
         .then((result) => {
@@ -59,7 +60,7 @@ function crearUsuario() {
             displayName: 'usuario',
           });
         })
-        Auth.auth().updateCurrentUser(originalUser);
+        firebase.auth().updateCurrentUser(originalUser);
     }
   });
 }
@@ -70,113 +71,92 @@ function mostrar(){
     var Taskvalue=data.val();
     console.log(Taskvalue.name);
     var tabla = document.getElementById('operator');
+    if(Taskvalue.estado == true){
     tabla.innerHTML += `
             <article class="person-card col-4 col-sm-3 col-md-2 d-flex flex-column align-items-center">
             <img class="w-50" src="./images/user.svg" alt="Profile photo" />
             <p>${Taskvalue.name}</p>
             
-            <a href="" type="button" class="btn btn-danger my-1" onclick=eliminar('{
-              doc.id
-            }')>Delete</a>
-            <a href="" type="button" class="btn btn-primary my-1" data-toggle="modal" data-target="#modalRegisterForm" onclick=update('{
-              doc.id
-            }','{doc.data().first}','{doc.data().last}','{
-        doc.data().born
-      }')>Update</button>
-            <a href="" type="button" class="btn btn-success my-1" onclick=habilitar('{
-              doc.id
-            }','{doc.data().first}','{doc.data().last}','{
-        doc.data().born
-      }')>Habilitado</a>
-            </article>`;
-  })
-}
-//Mostrar operadores en tiempo real
-var tabla = document.getElementById('operator');
-/*db.collection('users').onSnapshot((querySnapshot) => {
-  tabla.innerHTML = '';
-  querySnapshot.forEach((doc) => {
-    console.log(`${doc.id} => ${doc.data()}`);
-    if (doc.data().state == true) {
-      //Revisa el estado para poner el boton habilitado o deshabilitado
-      tabla.innerHTML += `
-            <article class="person-card col-4 col-sm-3 col-md-2 d-flex flex-column align-items-center">
-            <img class="w-50" src="./images/user.svg" alt="Profile photo" />
-            <p>${doc.data().first}</p>
-            
             <a href="" type="button" class="btn btn-danger my-1" onclick=eliminar('${
-              doc.id
+              Taskvalue.id
             }')>Delete</a>
             <a href="" type="button" class="btn btn-primary my-1" data-toggle="modal" data-target="#modalRegisterForm" onclick=update('${
-              doc.id
-            }','${doc.data().first}','${doc.data().last}','${
-        doc.data().born
+              Taskvalue.id
+            }','${Taskvalue.name}','${Taskvalue.empresa}','${
+        Taskvalue.password
       }')>Update</button>
             <a href="" type="button" class="btn btn-success my-1" onclick=habilitar('${
-              doc.id
-            }','${doc.data().first}','${doc.data().last}','${
-        doc.data().born
+              Taskvalue.id
+            }','${
+              Taskvalue.id
+            }','${Taskvalue.name}','${Taskvalue.empresa}','${
+        Taskvalue.password
       }')>Habilitado</a>
             </article>`;
-    } else {
+    }else{
       tabla.innerHTML += `
             <article class="person-card col-4 col-sm-3 col-md-2 d-flex flex-column align-items-center">
             <img class="w-50" src="./images/user.svg" alt="Profile photo" />
-            <p>${doc.data().first}</p>
+            <p>${Taskvalue.name}</p>
             
             <a href="" type="button" class="btn btn-danger my-1" onclick=eliminar('${
-              doc.id
+              Taskvalue.id
             }')>Delete</a>
             <a href="" type="button" class="btn btn-primary my-1" data-toggle="modal" data-target="#modalRegisterForm" onclick=update('${
-              doc.id
-            }','${doc.data().first}','${doc.data().last}','${
-        doc.data().born
+              Taskvalue.id
+            }','${Taskvalue.name}','${Taskvalue.empresa}','${
+        Taskvalue.password
       }')>Update</button>
-            <a href="" type="button" class="btn btn-warning my-1" onclick=habilitar('${
-              doc.id
-            }','${doc.data().first}','${doc.data().last}','${
-        doc.data().born
-      }')>Deshabilitado</a>
+            <a href="" type="button" class="btn btn-warning my-1" onclick=deshabilitar('${
+              Taskvalue.id
+            }','${
+              Taskvalue.id
+            }','${Taskvalue.name}','${Taskvalue.empresa}','${
+        Taskvalue.password
+      }','${Taskvalue.estado}')>Deshabilitado</a>
             </article>`;
     }
-  });
-});*/
-
-//Funcion con error
-function habilitar(id, name, email, contraseña) {
-  console.log('ENTREEEEEEEEEEEEEEEEEEEE');
-  db.collection('users')
-    .doc(id)
-    .set({
-      first: name,
-      last: email,
-      born: contraseña,
-      state: true,
-    })
-    .then(function () {
-      console.log('AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA');
-    })
-    .catch(function (error) {
-      console.error('BBBBBBBBBBBBBBBBBBBBBBB ', error);
-    });
+  })
 }
-//A veces funciona, aveces no. Revisar
+
+function habilitar(id , name, email, contraseña) {
+    function arrayJSON(id,empresa, name, password, estado) {
+      var data = {
+        id:id,
+        empresa: empresa,
+        name: name,
+        password: password,
+        estado: estado,
+      };
+    return data;
+  }
+  var arrayData = arrayJSON(id,name,email,contraseña,false);
+  var task = firebase.database().ref('Operadores/' + id);
+  task.set(arrayData);
+}
+
+function deshabilitar(id , name, email, contraseña) {
+  function arrayJSON(id,empresa, name, password, estado) {
+    var data = {
+      id:id,
+      empresa: empresa,
+      name: name,
+      password: password,
+      estado: estado,
+    };
+  return data;
+}
+var arrayData = arrayJSON(id,name,email,contraseña,true);
+var task = firebase.database().ref('Operadores/' + id);
+task.set(arrayData);
+}
+
 function eliminar(id) {
-  fb.usersCollection.doc(id).delete;
-  //var deleteDoc = db.collection('users').doc(id).delete();
-  /*db.collection('users')
-    .doc(id)
-    .delete()
-    .then(function () {
-      console.log('Document successfully deleted!');
-    })
-    .catch(function (error) {
-      console.error('Error removing document: ', error);
-    });*/
+  firebase.database().ref('Operadores/' + id).remove();
 }
 
 //Arreglar el state
-function update(id, name, email, contraseña) {
+function update(id, name, email, contraseña, estado) {
   document.getElementById('orangeForm-name').value = name;
   document.getElementById('orangeForm-email').value = email;
   document.getElementById('orangeForm-pass').value = contraseña;
@@ -192,15 +172,20 @@ function update(id, name, email, contraseña) {
     var name = document.getElementById('orangeForm-name').value;
     var email = document.getElementById('orangeForm-email').value;
     var contraseña = document.getElementById('orangeForm-pass').value;
-    db.collection('users')
-      .doc(id)
-      .set({
-        first: name,
-        last: email,
-        born: contraseña,
-        state: false,
-      })
-      .then(function () {
+    function arrayJSON(id,empresa, name, password, estado) {
+      var data = {
+        id:id,
+        empresa: empresa,
+        name: name,
+        password: password,
+        estado: estado,
+      };
+      return data;
+    }
+    var arrayData = arrayJSON(id, email, name, contraseña, estado);
+    var task = firebase.database().ref('Operadores/' + id);
+    task.set(arrayData);
+      
         console.log('Document successfully written!');
         document.getElementById('orangeForm-name').value = '';
         document.getElementById('orangeForm-email').value = '';
@@ -212,9 +197,6 @@ function update(id, name, email, contraseña) {
                 </button>`;
         document.getElementById('updateUser').innerHTML = `
                 <button class="btn btn-deep-orange" id="botonActualizar" onclick="crearUsuario()">Crear Usuario</button>`;
-      })
-      .catch(function (error) {
-        console.error('Error writing document: ', error);
-      });
+     
   };
 }
