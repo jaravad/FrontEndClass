@@ -6,14 +6,73 @@ const updateCount = () => {
 
 const auth = firebase.auth();
 const db = firebase.database();
+const form = document.forms['newQuestion'];
+
+const questionsInfo = `<article class="col-12 col-md-6 pl-2 pr-2 mb-4">
+<div class="w-100 h-100 soft p-3 d-flex align-items-center globe">
+  <div class="ml-auto mr-sm-5">
+    <h4 class="mb-2 font-weight-normal text-right">Preguntas</h4>
+    <div class="d-flex align-items-start justify-content-end color-1">
+      <h3 class="mr-4" id="questionsCount">0</h3>
+      <i class="material-icons">
+        help
+      </i>
+    </div>
+
+    <h4 class="mb-2 font-weight-normal text-right">
+      Tests realizados
+    </h4>
+    <div class="d-flex align-items-start justify-content-end color-2">
+      <h3 class="mr-4">12</h3>
+      <i class="material-icons">
+        assessment
+      </i>
+    </div>
+  </div>
+</div>
+</article>`;
 
 const displayQuestions = (user) => {
+  $('questionsContainer').html('');
+  $('#questionsContainer').append(questionsInfo);
+
   const questionsRef = db.ref(`empresas/${user.uid}/preguntas`);
   questionsRef.once('value').then(function (snapshot) {
     const questions = snapshot.val();
     Object.keys(questions).forEach(function (question) {
       appendQuestion(questions[question]); // value
     });
+  });
+};
+
+const addQuestion = (user) => {
+  const question = {
+    title: `Pregunta ${n}`,
+    question: form['question'].value,
+    options: {
+      one: { opTitle: form['op-1'].value, opValue: form['op-1-val'].value },
+      two: { opTitle: form['op-2'].value, opValue: form['op-2-val'].value },
+      three: {
+        opTitle: form['op-3'].value,
+        opValue: form['op-3-val'].value,
+      },
+      four: {
+        opTitle: form['op-4'].value,
+        opValue: form['op-4-val'].value,
+      },
+    },
+  };
+
+  db.ref(`empresas/${user.uid}/preguntas/p${n}`).set(question, function (
+    error
+  ) {
+    if (error) {
+      // The write failed...
+    } else {
+      appendQuestion(question);
+      n += 1;
+      updateCount();
+    }
   });
 };
 
@@ -31,44 +90,13 @@ auth.onAuthStateChanged(function (user) {
       $('#userPhoto').attr('src', snapshot.val().img);
       $('#empName').html(snapshot.val().empname);
     });
-    const form = document.forms['newQuestion'];
+
     form.addEventListener('submit', function handleFormSubmit(event) {
       event.preventDefault();
-      addQuestion();
+      addQuestion(user);
       form.reset();
       $('#addQuestion').modal('hide');
     });
-
-    const addQuestion = () => {
-      const question = {
-        title: `Pregunta ${n}`,
-        question: form['question'].value,
-        options: {
-          one: { opTitle: form['op-1'].value, opValue: form['op-1-val'].value },
-          two: { opTitle: form['op-2'].value, opValue: form['op-2-val'].value },
-          three: {
-            opTitle: form['op-3'].value,
-            opValue: form['op-3-val'].value,
-          },
-          four: {
-            opTitle: form['op-4'].value,
-            opValue: form['op-4-val'].value,
-          },
-        },
-      };
-
-      db.ref(`empresas/${user.uid}/preguntas/p${n}`).set(question, function (
-        error
-      ) {
-        if (error) {
-          // The write failed...
-        } else {
-          appendQuestion(question);
-          n += 1;
-          updateCount();
-        }
-      });
-    };
   } else {
     // No user is signed in.
   }
