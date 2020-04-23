@@ -33,7 +33,7 @@ const questionsInfo = `<article class="col-12 col-md-6 pl-2 pr-2 mb-4">
 </article>`;
 
 const displayQuestions = (user) => {
-  $('questionsContainer').html('');
+  $('#questionsContainer').html('');
   $('#questionsContainer').append(questionsInfo);
 
   const questionsRef = db.ref(`empresas/${user.uid}/preguntas`);
