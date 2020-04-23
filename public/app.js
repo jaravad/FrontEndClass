@@ -34,33 +34,43 @@ db.collection('users').onSnapshot((querySnapshot) => {
 console.log(db.collection('users').doc('uFjwgTld1m0JblYaNBaV').born);
 
 function crearUsuario() {
+
   var name = document.getElementById('orangeForm-name').value;
   var email = document.getElementById('orangeForm-email').value;
   var contraseña = document.getElementById('orangeForm-pass').value;
-  empresa = auth.currentUser.uid;
+  var user = firebase.auth().currentUser;
   firebase.auth().onAuthStateChanged(function (user) {
     if (user) {
-      db.collection('users')
-        .add({
+      function arrayJSON(empresa, name, password) {
+        var data = {
           empresa: empresa,
-          first: name,
-          last: email,
-          born: contraseña,
-          state: true,
-          respuestas: [0, 0, 0, 0, 0],
-          valor: [0, 0, 0, 0, 0],
+          name: name,
+          password: password,
+        };
+        return data;
+      }
+      var arrayData = arrayJSON(email, name, contraseña);
+      var task = firebase.database().ref('Operadores/' + user.uid);
+      task.set(arrayData);
+
+      auth
+        .createUserWithEmailAndPassword(email, contraseña)
+        .then((result) => {
+          result.user.updateProfile({
+            displayName: 'empresa',
+          });
+
         })
-        .then(function (docRef) {
-          console.log('Document written with ID: ', docRef.id);
-          document.getElementById('orangeForm-name').value = '';
-          document.getElementById('orangeForm-email').value = '';
-          document.getElementById('orangeForm-pass').value = '';
-        })
-        .catch(function (error) {
-          console.error('Error adding document: ', error);
-        });
     }
   });
+}
+mostrar();
+function mostrar(){
+  var task = firebase.database().ref("Operadores/");
+  task.on("child_added",function(data){
+    var Taskvalue=data.val();
+    console.log(Taskvalue.name);
+  })
 }
 //Mostrar operadores en tiempo real
 var tabla = document.getElementById('operator');
