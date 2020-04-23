@@ -31,16 +31,15 @@ db.collection('users').onSnapshot((querySnapshot) => {
   operadores = 0;
 });
 
-console.log(db.collection('users').doc('uFjwgTld1m0JblYaNBaV').born);
-
 function crearUsuario() {
-
+  let originalUser = Auth.auth().currentUser;
   var name = document.getElementById('orangeForm-name').value;
   var email = document.getElementById('orangeForm-email').value;
   var contraseña = document.getElementById('orangeForm-pass').value;
   var user = firebase.auth().currentUser;
   firebase.auth().onAuthStateChanged(function (user) {
     if (user) {
+      console.log('entre');
       function arrayJSON(empresa, name, password) {
         var data = {
           empresa: empresa,
@@ -59,8 +58,8 @@ function crearUsuario() {
           result.user.updateProfile({
             displayName: 'usuario',
           });
-
         })
+        Auth.auth().updateCurrentUser(originalUser);
     }
   });
 }
